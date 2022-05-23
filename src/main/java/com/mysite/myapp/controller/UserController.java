@@ -5,13 +5,11 @@ import com.mysite.myapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/user")
@@ -27,7 +25,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public String read(Model model, @PathVariable("id") long id) {
+    public String read(Model model, @RequestParam("id") long id) {
         model.addAttribute("user", userService.getUserById(id));
         return "user/user";
     }
@@ -38,7 +36,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}/edit")
-    public String editUser(Model model, @PathVariable("id") long id) {
+    public String editUser(Model model, @RequestParam("id") long id) {
         model.addAttribute("user", userService.getUserById(id));
         return "user/edit";
     }
@@ -49,14 +47,14 @@ public class UserController {
         return "redirect:/user";
     }
 
-    @PatchMapping("/{id}")
+    @PostMapping(value = "/{id}",params = "action=update")
     public String update(@ModelAttribute("user") User user) {
         userService.update(user);
-        return "redirect:/user/" + user.getId();
+        return "redirect:/user/";
     }
 
-    @DeleteMapping("/{id}")
-    public String delete(@PathVariable("id") long id) {
+    @PostMapping(value = "/{id}",params = "action=delete")
+    public String delete(@RequestParam("id") long id) {
         userService.delete(id);
         return "redirect:/user";
     }
