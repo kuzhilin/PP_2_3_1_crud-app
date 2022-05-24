@@ -25,7 +25,7 @@
         <td th:text="${user.surname}">value</td>
         <td th:text="${user.email}">value</td>
         <td th:text="${user.location}">value</td>
-        <td><a th:href="|/user/${user.id}?id=${user.id}|">link</a></td>
+        <td><a th:href="@{/user/(id=${user.id})}">link</a></td>
     </tr>
 </table>
 <br/>

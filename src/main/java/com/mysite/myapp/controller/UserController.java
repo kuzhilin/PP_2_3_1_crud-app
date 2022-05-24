@@ -24,7 +24,7 @@ public class UserController {
         return "user/index";
     }
 
-    @GetMapping("/{id}")
+    @GetMapping(params = "id")
     public String read(Model model, @RequestParam("id") long id) {
         model.addAttribute("user", userService.getUserById(id));
         return "user/user";
@@ -35,7 +35,7 @@ public class UserController {
         return "user/new";
     }
 
-    @GetMapping("/{id}/edit")
+    @GetMapping("/edit")
     public String editUser(Model model, @RequestParam("id") long id) {
         model.addAttribute("user", userService.getUserById(id));
         return "user/edit";
@@ -46,14 +46,14 @@ public class UserController {
         userService.save(user);
         return "redirect:/user";
     }
-
-    @PostMapping(value = "/{id}",params = "action=update")
+//
+    @PostMapping(params = "action=update")
     public String update(@ModelAttribute("user") User user) {
         userService.update(user);
-        return "redirect:/user/";
+        return "redirect:/user";
     }
 
-    @PostMapping(value = "/{id}",params = "action=delete")
+    @PostMapping(params = "action=delete")
     public String delete(@RequestParam("id") long id) {
         userService.delete(id);
         return "redirect:/user";

@@ -9,7 +9,7 @@
     </style>
 </head>
 <body>
-<form th:method="post" th:action="|/user/${user.id}?action=update|" th:object="${user}">
+<form th:method="post" th:action="@{/user(id=${user.id},action='update')}" th:object="${user}">
     <label>Имя</label>
     <input type="text"  th:field="*{name}">
     <br/>
